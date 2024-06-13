@@ -1,0 +1,16 @@
+{% load static %}
+<div class="row row-cols-1 row-cols-md-4 g-4">
+{% for book in books %}
+<a href="{% url 'detail_book' book.id %}">
+    <div class="col">
+        <div class="card">
+            <img class="card-img-top" src="{{ book.path.url }}" alt="{{ book.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">{{ book.description }}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}
+</div>
