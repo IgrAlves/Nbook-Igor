@@ -13,15 +13,6 @@ def index(request):
     books = Book.objects.all()
     return render(request, 'catalog/index.html', {'books': books})
 
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Like, Comment
-from .forms import BookForm, CommentForm
-from django.contrib.auth.decorators import login_required
-
-@login_required
-def home(request):
-    books = Book.objects.all()
-    return render(request, 'catalog/home.html', {'books': books})
 
 @login_required
 def like_book(request, book_id):
@@ -54,7 +45,7 @@ def add_book(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Roupa cadastrada com sucesso!')
+            messages.success(request, 'Livro cadastrado com sucesso!')
             return redirect('home')
     else:
         form = BookForm()
@@ -67,7 +58,7 @@ def edit_book(request, book_id):
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Roupa editada com sucesso!')
+            messages.success(request, 'Livro editado com sucesso!')
             return redirect('home')
     else:
         form = BookForm(instance=book)
@@ -78,6 +69,6 @@ def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     if request.method == 'POST':
         book.delete()
-        messages.success(request, 'Roupa deletada com sucesso!')
+        messages.success(request, 'Livro deletado com sucesso!')
         return redirect('home')
     return render(request, 'catalog/delete_book.html', {'book': book})
